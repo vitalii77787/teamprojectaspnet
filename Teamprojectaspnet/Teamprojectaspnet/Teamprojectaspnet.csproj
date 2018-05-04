@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAL\DAL.cs" />
     <Compile Include="DAL\DataBaseInitializer.cs" />
     <Compile Include="DAL\GoogleMapModel.cs" />
     <Compile Include="Global.asax.cs">
