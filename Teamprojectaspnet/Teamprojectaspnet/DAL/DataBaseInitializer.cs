@@ -28,7 +28,7 @@ namespace Teamprojectaspnet.DAL
             Address adminAddress = new Address() { City = cityRivne, Street = "Київська", Number = "20" };
             Login adminLogin = new Login() { Name = "admin", LoginStatus = loginStatusAdmin, Password = securepassword1, Address = adminAddress };
             context.Logins.Add(adminLogin);
-            context.Logins.Add(new Login() { Name = "serge", LoginStatus = loginStatusUser, Password = securepassword2, Address = adminAddress });
+            context.Logins.Add(new Login() { Name = "user", LoginStatus = loginStatusUser, Password = securepassword2, Address = adminAddress });
             context.SaveChanges();
 
             MarkerType supermarketType = new MarkerType() { Name = "supermarket" };

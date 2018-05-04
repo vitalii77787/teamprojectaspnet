@@ -15,6 +15,8 @@ namespace Teamprojectaspnet.DAL
         public GoogleMapModel()
             : base("name=GoogleMapModel")
         {
+          //  Database.SetInitializer(new DataBaseInitializer<GoogleMapModel>());
+         // Database.SetInitializer<GoogleMapModel>(new DataBaseInitializer<GoogleMapModel>());
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
