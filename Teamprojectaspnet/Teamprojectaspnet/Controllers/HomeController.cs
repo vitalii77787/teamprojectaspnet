@@ -17,8 +17,6 @@ namespace Teamprojectaspnet.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
@@ -33,5 +31,18 @@ namespace Teamprojectaspnet.Controllers
             var result = data.GetAllPlaceTypes();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult GetMarkersOfType(string type)
+        {
+            List<string> resultreturn = new List<string>();
+             var result = data.GetMarkersOfType(type);
+            foreach (var item in result)
+            {
+                var str = item.Name + " " + item.Lat + " " + item.Lng + " ";
+                resultreturn.Add(str);
+            }
+            return Json(resultreturn, JsonRequestBehavior.AllowGet);
+        }
+      
     }
 }

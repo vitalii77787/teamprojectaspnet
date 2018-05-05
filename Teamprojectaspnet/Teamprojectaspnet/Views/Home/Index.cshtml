@@ -30,20 +30,26 @@
     </div>
 </div>
 <div class="row">
-    <select  class="form-control"  id="markertypes" onchange="ShowMarker()"></select>
-</div>
-<br />
-<br />
-<div class="row">
     <div class="col-md-8">
-        <div id="canvas" style="height: 600px; width:600px;"></div>
+        <select class="form-control" id="markertypes" onchange="ShowMarker()"></select>
     </div>
     <div class="col-md-4">
-        <label  id="currentmarkertype"  />
-        <p id="demo"></p>
+        <button class="btn btn-default" id="Find" onclick="FindMarkers()">FIND</button>
+        <select class="form-control" id="markertypesnew"></select>
     </div>
 </div>
-@section scripts {
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-8">
+            <div id="canvas" style="height: 600px; width:600px;"></div>
+        </div>
+        <div class="col-md-4">
+            <label id="currentmarkertype" />
+            <p id="demo"></p>
+        </div>
+    </div>
+    @section scripts {
     <script type="text/javascript">
     $(document).ready(function () {
         GetMarkerTypes();
@@ -53,7 +59,7 @@
             google.maps.visualRefresh = true;
             var Rivne = new google.maps.LatLng(50.6231, 26.2274);
             var mapOptions = {
-                zoom: 15,
+                zoom: 14,
                 center: Rivne,
                 mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
             };
@@ -69,6 +75,19 @@
         function ShowMarker() {
             var x = document.getElementById("markertypes").value;
             document.getElementById("currentmarkertype").textContent = "You selected: " + x;
+            }
+        function FindMarkers() {
+            var type = document.getElementById("markertypes").value;
+            $.ajax 
+                ({
+                    type: "POST", 
+                    url: "/Home/GetMarkersOfType", 
+                    dataType: "json", 
+                    data: { type: type },
+                    success: function (result) { 
+                        alert(result)
+                    },
+                });
         }
     </script>
-}
+    }

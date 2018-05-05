@@ -39,6 +39,10 @@ namespace Teamprojectaspnet.DAL
             ctx.SaveChanges();
         }
 
+        public Marker[] GetMarkersOfType(string type)
+        {
+            return ctx.Markers.Where(item => item.Type.Name == type).ToArray();
+        }
         public Marker[] GetMarkersOfType(MarkerType type, City city)
         {
             return ctx.Markers.Where(item => item.Type.Name == type.Name && item.Address.City.Name == city.Name).ToArray();
