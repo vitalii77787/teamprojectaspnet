@@ -31,11 +31,15 @@
 </div>
 <div class="row">
     <div class="col-md-8">
-        <select class="form-control" id="markertypes" onchange="ShowMarker()"></select>
+        <select class="form-control" id="markertypes" onchange="ShowMarker()">
+            @for (int i=0; i<ViewBag.Types.Length; i++)
+            {
+             <option>@ViewBag.Types[i]</option>
+             }
+        </select>
     </div>
     <div class="col-md-4">
         <button class="btn btn-default" id="Find" onclick="FindMarkers()">FIND</button>
-        <select class="form-control" id="markertypesnew"></select>
     </div>
 </div>
     <br />
@@ -51,8 +55,10 @@
     </div>
     @section scripts {
     <script type="text/javascript">
+        var map;
+        var markers=[];
     $(document).ready(function () {
-        GetMarkerTypes();
+       // GetMarkerTypes();
         SetMap();
         });
         function SetMap() {
@@ -63,7 +69,7 @@
                 center: Rivne,
                 mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
             };
-            var map = new google.maps.Map(document.getElementById("canvas"), mapOptions);
+            map = new google.maps.Map(document.getElementById("canvas"), mapOptions);
         }
         function GetMarkerTypes() {
             $.getJSON('@Url.Action("GetAllTypes","Home")', function (data) {
@@ -85,6 +91,14 @@
                     dataType: "json", 
                     data: { type: type },
                     success: function (result) { 
+                        $.each(result, function (i, item) {
+                            var marker = new google.maps.Marker(
+                                {
+                                    position: { lat: item.Lat, lng: item.Lng},
+                                    map: map,
+                                    animation: google.maps.Animation.DROP
+                                });
+                        });
                         alert(result)
                     },
                 });

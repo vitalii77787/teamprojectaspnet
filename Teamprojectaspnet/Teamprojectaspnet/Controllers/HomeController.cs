@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Teamprojectaspnet.DAL;
+using Teamprojectaspnet.Services;
 
 namespace Teamprojectaspnet.Controllers
 {
@@ -12,6 +13,7 @@ namespace Teamprojectaspnet.Controllers
         DAL.DAL data = new DAL.DAL();
         public ActionResult Index()
         {
+            ViewBag.Types=data.GetAllPlaceTypes();
             return View();
         }
 
@@ -34,12 +36,20 @@ namespace Teamprojectaspnet.Controllers
         [HttpPost]
         public JsonResult GetMarkersOfType(string type)
         {
-            List<string> resultreturn = new List<string>();
+
+            List<MarkerDTO> resultreturn = new List<MarkerDTO>();
              var result = data.GetMarkersOfType(type);
             foreach (var item in result)
             {
-                var str = item.Name + " " + item.Lat + " " + item.Lng + " ";
-                resultreturn.Add(str);
+                MarkerDTO current = new MarkerDTO()
+                {
+                    Name = item.Name,
+                    Description = item.Description,
+                    Lat = item.Lat,
+                    Lng = item.Lng,
+                    Contacts = item.Contacts.Select(x => x.Name).ToArray()
+                };
+                resultreturn.Add(current);
             }
             return Json(resultreturn, JsonRequestBehavior.AllowGet);
         }
