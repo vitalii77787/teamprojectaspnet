@@ -2,6 +2,13 @@
     ViewBag.Title = "Home Page";
 }
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+<style>
+    .markerInfo {
+        height: 150px;
+        width: 250px;
+        background-color:beige;
+    }
+</style>
 <div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
@@ -58,14 +65,13 @@
         var map;
         var markers=[];
     $(document).ready(function () {
-       // GetMarkerTypes();
         SetMap();
         });
         function SetMap() {
             google.maps.visualRefresh = true;
             var Rivne = new google.maps.LatLng(50.6231, 26.2274);
             var mapOptions = {
-                zoom: 14,
+                zoom: 13,
                 center: Rivne,
                 mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
             };
@@ -83,6 +89,7 @@
             document.getElementById("currentmarkertype").textContent = "You selected: " + x;
             }
         function FindMarkers() {
+            clearMarkers();
             var type = document.getElementById("markertypes").value;
             $.ajax 
                 ({
@@ -91,17 +98,43 @@
                     dataType: "json", 
                     data: { type: type },
                     success: function (result) { 
-                        $.each(result, function (i, item) {
-                            var marker = new google.maps.Marker(
-                                {
-                                    position: { lat: item.Lat, lng: item.Lng},
-                                    map: map,
-                                    animation: google.maps.Animation.DROP
-                                });
-                        });
-                        alert(result)
+                        for (var i = 0; i < result.length; i++) {
+                            addMarkerWithTimeout(result[i], i * 200);
+                        }
+                        //$.each(result, function (i, item) {
+                        //    var marker = new google.maps.Marker(
+                        //        {
+                        //            position: { lat: item.Lat, lng: item.Lng},
+                        //            map: map,
+                        //            animation: google.maps.Animation.DROP
+                        //        });
+                        //    markers.push(marker);
+                        //});
                     },
                 });
+        }
+        function addMarkerWithTimeout(item, timeout) {
+            window.setTimeout(function () {
+             var newmarker= new google.maps.Marker({
+                    position: { lat: item.Lat, lng: item.Lng },
+                    map: map,
+                    animation: google.maps.Animation.DROP
+                });
+                var infowindow = new google.maps.InfoWindow({
+                    content: "<div class='markerInfo'><div class='row'><div class='col-md-4 d-flex justify-content-center'>Name:</div><div class='col-md-8 d-flex justify-content-center'>" + item.Name + "</div></div><hr/><div class='row'><div class='col-md-4 d-flex justify-content-center'>Description:</div><div class='col-md-8 d-flex justify-content-center'>"
+                        + item.Description + "</div></div><hr/><div class='row'><div class='col-md-4 d-flex justify-content-center'>Contacts:</div><div class='col-md-8 d-flex justify-content-center'> " + item.Contacts  + "</div></div></div>"
+                });
+                google.maps.event.addListener(newmarker, 'click', function () {
+                    infowindow.open(map, newmarker);
+                });
+                markers.push(newmarker);
+            }, timeout);
+        }
+        function clearMarkers() {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
         }
     </script>
     }
