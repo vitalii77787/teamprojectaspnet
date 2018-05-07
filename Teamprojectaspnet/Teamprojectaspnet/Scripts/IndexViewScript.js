@@ -1,9 +1,16 @@
 ﻿var map;
+var lastopeninfoWindow = new google.maps.InfoWindow;
 var markers = [];
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var geocoder;
+var currentposition;
+
 $(document).ready(function () {
     SetMap();
 });
 function SetMap() {
+    directionsDisplay = new google.maps.DirectionsRenderer();
     google.maps.visualRefresh = true;
     var Rivne = new google.maps.LatLng(50.6231, 26.2274);
     var mapOptions = {
@@ -12,13 +19,15 @@ function SetMap() {
         mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
     };
     map = new google.maps.Map(document.getElementById("canvas"), mapOptions);
+    directionsDisplay.setMap(map);
+    geocoder = new google.maps.Geocoder();
 }
 function GetMarkerTypes() {
     $.getJSON('@Url.Action("GetAllTypes","Home")', function (data) {
         $.each(data, function (i, item) {
             $("#markertypes").append("<option value=" + item + ">" + item + "</option>");
         });
-    })
+    });
 }
 function ShowMarker() {
     var x = document.getElementById("markertypes").value;
@@ -37,16 +46,7 @@ function FindMarkers() {
                 for (var i = 0; i < result.length; i++) {
                     addMarkerWithTimeout(result[i], i * 200);
                 }
-                //$.each(result, function (i, item) {
-                //    var marker = new google.maps.Marker(
-                //        {
-                //            position: { lat: item.Lat, lng: item.Lng},
-                //            map: map,
-                //            animation: google.maps.Animation.DROP
-                //        });
-                //    markers.push(marker);
-                //});
-            },
+            }
         });
 }
 function addMarkerWithTimeout(item, timeout) {
@@ -56,12 +56,15 @@ function addMarkerWithTimeout(item, timeout) {
             map: map,
             animation: google.maps.Animation.DROP
         });
-        var infowindow = new google.maps.InfoWindow({
-            content: "<div class='markerInfo'><div class='row'><div class='col-md-4 d-flex justify-content-center'>Name:</div><div class='col-md-8 d-flex justify-content-center'>" + item.Name + "</div></div><hr/><div class='row'><div class='col-md-4 d-flex justify-content-center'>Description:</div><div class='col-md-8 d-flex justify-content-center'>"
-                + item.Description + "</div></div><hr/><div class='row'><div class='col-md-4 d-flex justify-content-center'>Contacts:</div><div class='col-md-8 d-flex justify-content-center'> " + item.Contacts + "</div></div></div>"
-        });
+        newmarker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
         google.maps.event.addListener(newmarker, 'click', function () {
-            infowindow.open(map, newmarker);
+            closeLastOpenedInfoWindow();
+            infoWindow = new google.maps.InfoWindow({
+                content: "<div class='markerInfo'><div class='row'><div class='col-md-4 d-flex justify-content-center'>Name:</div><div class='col-md-8 d-flex justify-content-center'>" + item.Name + "</div></div><hr/><div class='row'><div class='col-md-4 d-flex justify-content-center'>Description:</div><div class='col-md-8 d-flex justify-content-center'>"
+                    + item.Description + "</div></div><hr/><div class='row'><div class='col-md-4 d-flex justify-content-center'>Contacts:</div><div class='col-md-8 d-flex justify-content-center'> " + item.Contacts + "</div></div></div>"
+            });
+            infoWindow.open(map, newmarker);
+            lastopeninfoWindow = infoWindow;
         });
         markers.push(newmarker);
     }, timeout);
@@ -71,4 +74,29 @@ function clearMarkers() {
         markers[i].setMap(null);
     }
     markers = [];
+}
+function closeLastOpenedInfoWindow() {
+    if (lastopeninfoWindow) {
+        lastopeninfoWindow.close();
+    }
+}
+function codeAddress() {
+    if (currentposition)
+    {
+        currentposition.setMap(null);
+        currentposition = null;
+    }
+    var address = document.getElementById('address').value;
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status === 'OK') {
+            map.setCenter(results[0].geometry.location);
+            var newmarker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+            currentposition = newmarker;
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
 }

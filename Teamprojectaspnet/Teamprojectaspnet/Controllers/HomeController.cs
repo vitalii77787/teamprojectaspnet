@@ -25,7 +25,6 @@ namespace Teamprojectaspnet.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
         public JsonResult GetAllTypes()
@@ -36,21 +35,7 @@ namespace Teamprojectaspnet.Controllers
         [HttpPost]
         public JsonResult GetMarkersOfType(string type)
         {
-
-            List<MarkerDTO> resultreturn = new List<MarkerDTO>();
-             var result = data.GetMarkersOfType(type);
-            foreach (var item in result)
-            {
-                MarkerDTO current = new MarkerDTO()
-                {
-                    Name = item.Name,
-                    Description = item.Description,
-                    Lat = item.Lat,
-                    Lng = item.Lng,
-                    Contacts = item.Contacts.Select(x => x.Name).ToArray()
-                };
-                resultreturn.Add(current);
-            }
+            var resultreturn = MarkerConverter.ConvertToView(data.GetMarkersOfType(type));
             return Json(resultreturn, JsonRequestBehavior.AllowGet);
         }
       
