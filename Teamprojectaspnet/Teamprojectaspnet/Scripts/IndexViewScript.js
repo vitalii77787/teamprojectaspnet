@@ -10,7 +10,7 @@ $(document).ready(function () {
     SetMap();
 });
 function SetMap() {
-    directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
     google.maps.visualRefresh = true;
     var Rivne = new google.maps.LatLng(50.6231, 26.2274);
     var mapOptions = {
@@ -65,6 +65,9 @@ function addMarkerWithTimeout(item, timeout) {
             });
             infoWindow.open(map, newmarker);
             lastopeninfoWindow = infoWindow;
+            if (currentposition) {
+                calcRoute(currentposition, newmarker);
+            }
         });
         markers.push(newmarker);
     }, timeout);
@@ -97,6 +100,19 @@ function codeAddress() {
             currentposition = newmarker;
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
+function calcRoute(currentposition, newmarker) {
+    var selectedMode = "WALKING";
+    var request = {
+        origin: currentposition.position,
+        destination: newmarker.position,
+        travelMode: google.maps.TravelMode[selectedMode]
+    };
+    directionsService.route(request, function (response, status) {
+        if (status === 'OK') {
+            directionsDisplay.setDirections(response);
         }
     });
 }
