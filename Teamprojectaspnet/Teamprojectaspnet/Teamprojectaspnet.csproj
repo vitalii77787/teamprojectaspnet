@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MarkerModelsController.cs" />
     <Compile Include="DAL\DAL.cs" />
     <Compile Include="DAL\DataBaseInitializer.cs" />
     <Compile Include="DAL\GoogleMapModel.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\LoginStatus.cs" />
     <Compile Include="Models\Marker.cs" />
+    <Compile Include="Models\MarkerModel.cs" />
     <Compile Include="Models\MarkerType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MarkerConverter.cs" />
@@ -206,6 +208,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\MarkerModels\Create.cshtml" />
+    <Content Include="Views\MarkerModels\Delete.cshtml" />
+    <Content Include="Views\MarkerModels\Details.cshtml" />
+    <Content Include="Views\MarkerModels\Edit.cshtml" />
+    <Content Include="Views\MarkerModels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -33,5 +33,7 @@ namespace Teamprojectaspnet.DAL
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+       // public System.Data.Entity.DbSet<Teamprojectaspnet.Models.MarkerModel> MarkerModels { get; set; }
     }
 }

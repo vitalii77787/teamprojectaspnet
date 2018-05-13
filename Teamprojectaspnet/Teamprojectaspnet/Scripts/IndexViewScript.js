@@ -1,8 +1,8 @@
 ﻿var map;
-var lastopeninfoWindow = new google.maps.InfoWindow;
+var lastopeninfoWindow;
 var markers = [];
 var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
+var directionsService;
 var geocoder;
 var currentposition;
 
@@ -10,6 +10,8 @@ $(document).ready(function () {
     SetMap();
 });
 function SetMap() {
+    directionsService = new google.maps.DirectionsService();
+    lastopeninfoWindow = new google.maps.InfoWindow;
     directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
     google.maps.visualRefresh = true;
     var Rivne = new google.maps.LatLng(50.6231, 26.2274);

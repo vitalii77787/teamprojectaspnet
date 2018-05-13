@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Teamprojectaspnet.Models;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Teamprojectaspnet.DAL
 {
@@ -38,7 +40,28 @@ namespace Teamprojectaspnet.DAL
             }
             ctx.SaveChanges();
         }
+        public async Task UpdateMarker(MarkerModel model)
+        {
+            Marker markerToUpdate =await ctx.Markers.FindAsync(model.ID);
+            markerToUpdate.Lat = Double.Parse(model.Lat);
+            markerToUpdate.Lng = Double.Parse(model.Lng);
+            markerToUpdate.Description = model.Description;
+            markerToUpdate.Name = model.Name;
+            ctx.SaveChanges();
+        }
 
+        public Marker GetMarkerById(int id)
+        {
+            return ctx.Markers.Where(x => x.Id == id).FirstOrDefault();
+        }
+        public async Task <Marker[]> GetAllMarker()
+        {
+            return await ctx.Markers.ToArrayAsync();
+        }
+        public async Task<Marker> GetMarkerByIdAsync(int id)
+        {
+            return await ctx.Markers.FindAsync(id);
+        }
         public Marker[] GetMarkersOfType(string type)
         {
             return ctx.Markers.Where(item => item.Type.Name == type).ToArray();
@@ -96,9 +119,9 @@ namespace Teamprojectaspnet.DAL
             markertype.Name = name;
             ctx.SaveChanges();
         }
-        public void DeleteMarkerType(int id)
+        public async Task DeleteMarkerTypeAsync(int id)
         {
-            MarkerType markertype = ctx.MarkerTypes.Where(item => item.Id == id).FirstOrDefault();
+            MarkerType markertype = await ctx.MarkerTypes.FindAsync(id);
             ctx.MarkerTypes.Remove(markertype);
             ctx.SaveChanges();
         }
@@ -327,9 +350,9 @@ namespace Teamprojectaspnet.DAL
             ctx.SaveChanges();
         }
 
-        public void DeleteMarker(int id)
+        public async Task DeleteMarker(int id)
         {
-            Marker marker = ctx.Markers.Where(item => item.Id == id).FirstOrDefault();
+            Marker marker = await ctx.Markers.FindAsync(id);
             Contact[] contacts = ctx.Contacts.Where(item => item.Marker.Id == id).ToArray();
             foreach (var item in contacts)
             {
