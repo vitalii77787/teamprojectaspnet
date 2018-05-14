@@ -52,7 +52,7 @@
                 <p id="demo"></p>
             </div>
         </div>*@
-<div class="row" style="margin-top:1%">
+@*<div class="row" style="margin-top:1%">
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-8 d-flex justify-content-center ">
@@ -74,8 +74,39 @@
 
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
+    </div>*@
+
+    
+        <div>
+            <div style="float:left">
+                
+                <label style="float:left;margin-right:2%;margin-top:1%" for="address">Find address:</label>
+
+                <div style="width:50%;float:left">
+                    <input type="text" placeholder="Address" id="address" class="form-control">
+                </div>
+
+                <button style="margin-left:1%" class="btn btn-primary" onclick="codeAddress()">Search</button>
+            </div>
+
+            <div>
+                <div style="float:left;width:20%">
+                    <select style="margin-left:2%;width:100%" class="form-control" id="markertypes" onchange="ShowMarker()">
+                        @for (int i = 0; i < ViewBag.Types.Length; i++)
+                        {
+                           <option>@ViewBag.Types[i]</option>
+                        }
+                    </select>
+                </div>
+
+                <button style="margin-left:1%" class="btn btn-primary" id="Find" onclick="FindMarkers()">FIND</button>
+
+            </div>
+        </div>
+   
+   
+   
+    @*<div class="col-md-4">
         <div class="panel panel-default">
             <div class="form-group">
                 <div class="row"> <label id="currentmarkertype" /></div>
@@ -91,7 +122,8 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
+
 @section scripts {
     <script type="text/javascript">
         
