@@ -42,6 +42,10 @@ namespace Teamprojectaspnet.Controllers
         // GET: MarkerModels/Create
         public ActionResult Create()
         {
+            ViewBag.Logins = data.GetAllLogins();
+            ViewBag.Types = data.GetAllPlaceTypes();
+            ViewBag.Addresses = data.GetAllAddresses();
+            ViewBag.Contacts = data.GetAllContacts();
             return View();
         }
 
@@ -50,7 +54,7 @@ namespace Teamprojectaspnet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,Lat,Lng,TypeofMarker,MarkerAddress,MarkerLogin")] MarkerModel markerModel)
+        public ActionResult Create([Bind(Include = "ID,Name,Description,Contacts,Lat,Lng,TypeofMarker,MarkerAddress,MarkerLogin")] MarkerModel markerModel)
         {
             if (ModelState.IsValid)
             {

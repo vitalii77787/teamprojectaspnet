@@ -50,6 +50,14 @@ namespace Teamprojectaspnet.DAL
             ctx.SaveChanges();
         }
 
+        public string [] GetAllAddresses()
+        {
+            return ctx.Addresses.Select(x => x.City.Name+", "+x.Street+" "+x.Number).ToArray();
+        }
+        public string [] GetAllContacts()
+        {
+            return ctx.Contacts.Select(x => x.Name).ToArray();
+        }
         public Marker GetMarkerById(int id)
         {
             return ctx.Markers.Where(x => x.Id == id).FirstOrDefault();
