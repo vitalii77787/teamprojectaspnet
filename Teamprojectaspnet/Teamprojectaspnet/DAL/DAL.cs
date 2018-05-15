@@ -43,8 +43,8 @@ namespace Teamprojectaspnet.DAL
         public async Task UpdateMarker(MarkerModel model)
         {
             Marker markerToUpdate =await ctx.Markers.FindAsync(model.ID);
-            markerToUpdate.Lat = Double.Parse(model.Lat);
-            markerToUpdate.Lng = Double.Parse(model.Lng);
+            markerToUpdate.Lat =model.Lat;
+            markerToUpdate.Lng =model.Lng;
             markerToUpdate.Description = model.Description;
             markerToUpdate.Name = model.Name;
             ctx.SaveChanges();

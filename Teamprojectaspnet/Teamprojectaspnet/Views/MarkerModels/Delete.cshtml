@@ -11,7 +11,7 @@
     <h4>MarkerModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
@@ -65,9 +65,15 @@
 
         <dd>
             @Html.DisplayFor(model => model.MarkerLogin)
-        </dd>
+        </dd>*@
+
+       
 
     </dl>
+
+    <label for="NameId">Name</label>
+
+    <input type="text" value="@Html.DisplayNameFor(model => model.Name)" id="NameId">
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
