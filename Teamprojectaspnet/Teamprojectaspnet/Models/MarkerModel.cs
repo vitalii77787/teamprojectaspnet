@@ -14,9 +14,9 @@ namespace Teamprojectaspnet.Models
         public string Description { get; set; }
         public string[] Contacts { get; set; }
         [RegularExpression(@"\d*\.\d*", ErrorMessage = "Invalid data")]
-        public string Lat { get; set; }
+        public double Lat { get; set; }
         [RegularExpression(@"\d*\.\d*", ErrorMessage = "Invalid data")]
-        public string Lng { get; set; }
+        public double Lng { get; set; }
         public string TypeofMarker { get; set; }
         public string MarkerAddress { get; set; }
         public string MarkerLogin { get; set; }

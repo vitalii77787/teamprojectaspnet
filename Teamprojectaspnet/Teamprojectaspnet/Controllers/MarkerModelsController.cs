@@ -54,13 +54,12 @@ namespace Teamprojectaspnet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,Contacts,Lat,Lng,TypeofMarker,MarkerAddress,MarkerLogin")] MarkerModel markerModel)
+        public ActionResult Create([Bind(Include = "ID,Name,Description,Lat,Lng,TypeofMarker,MarkerAddress,MarkerLogin,Contacts")] MarkerModel markerModel)
         {
             if (ModelState.IsValid)
             {
-                //db.MarkerModels.Add(markerModel);
-                //await db.SaveChangesAsync();
-                //return RedirectToAction("Index");
+                data.AddNewMarker(markerModel);
+                return RedirectToAction("Index");
             }
             return View(markerModel);
         }

@@ -40,11 +40,39 @@ namespace Teamprojectaspnet.DAL
             }
             ctx.SaveChanges();
         }
+
+        public void AddNewMarker(MarkerModel model)
+        {
+            Address currentaddress = ctx.Addresses.Where(x =>x.Id == Int32.Parse(model.MarkerAddress.Split(':').First())).FirstOrDefault();
+            List <Contact> currencontacts=new List<Contact>();
+            for (int i = 0; i < model.Contacts.Length; i++)
+            {
+                Contact current = ctx.Contacts.Where(x => x.Id == Int32.Parse(model.Contacts[i].Split(':').First())).FirstOrDefault();
+                currencontacts.Add(current);
+            }
+            currencontacts.ToArray();
+            Login currentlogin = ctx.Logins.Where(x => x.Id == Int32.Parse(model.MarkerLogin.Split(':').First())).FirstOrDefault();
+            MarkerType currentType=ctx.MarkerTypes.Where(x => x.Id == Int32.Parse(model.TypeofMarker.Split(':').First())).FirstOrDefault();
+            Marker newmarker = new Marker()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Lat = model.Lat,
+                Lng = model.Lng,
+                Type = currentType,
+                Login = currentlogin,
+                Address = currentaddress,
+                Contacts = currencontacts
+            };
+            ctx.Markers.Add(newmarker);
+            ctx.SaveChanges();
+        }
+        
         public async Task UpdateMarker(MarkerModel model)
         {
             Marker markerToUpdate =await ctx.Markers.FindAsync(model.ID);
-            markerToUpdate.Lat = Double.Parse(model.Lat);
-            markerToUpdate.Lng = Double.Parse(model.Lng);
+            markerToUpdate.Lat =model.Lat;
+            markerToUpdate.Lng = model.Lng;
             markerToUpdate.Description = model.Description;
             markerToUpdate.Name = model.Name;
             ctx.SaveChanges();
