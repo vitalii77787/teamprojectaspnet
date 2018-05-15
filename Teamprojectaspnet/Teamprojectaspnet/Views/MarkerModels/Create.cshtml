@@ -31,7 +31,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Contacts, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <select class="form-control">
+                        <select class="form-control" name="@Html.NameFor(m => m.Contacts)">
                             @for (int i = 0; i < ViewBag.Contacts.Length; i++)
                             {
                                 <option>@ViewBag.Contacts[i]</option>
@@ -44,7 +44,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Lat, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(x => x.Lat, new { id = string.Format("Lat"), @class = "form-control" })
+                        @Html.TextBoxFor(x => x.Lat, new {@readonly = true, id = string.Format("Lat"),  @class = "form-control" })
+                       
                         @*@Html.EditorFor(model => model.Lat, new { htmlAttributes = new { @class = "form-control" } })*@
                         @Html.ValidationMessageFor(model => model.Lat, "", new { @class = "text-danger" })
                     </div>
@@ -52,7 +53,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Lng, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(x => x.Lng, new { id = string.Format("Lng"), @class = "form-control" })
+                        @Html.TextBoxFor(x => x.Lng, new { @readonly = true, id = string.Format("Lng"), @class = "form-control" })
                         @*@Html.EditorFor(model => model.Lng, new { htmlAttributes = new { @class = "form-control" } })*@
                         @Html.ValidationMessageFor(model => model.Lng, "", new { @class = "text-danger" })
                     </div>
@@ -60,7 +61,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.TypeofMarker, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <select class="form-control">
+                        <select class="form-control" name="@Html.NameFor(m => m.TypeofMarker)">
                             @for (int i = 0; i < ViewBag.Types.Length; i++)
                             {
                                 <option>@ViewBag.Types[i]</option>
@@ -73,7 +74,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MarkerAddress, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <select class="form-control">
+                        <select class="form-control" name="@Html.NameFor(m => m.MarkerAddress)">
                             @for (int i = 0; i < ViewBag.Addresses.Length; i++)
                             {
                                 <option>@ViewBag.Addresses[i]</option>
@@ -86,7 +87,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MarkerLogin, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <select class="form-control">
+                        <select class="form-control" name="@Html.NameFor(m => m.MarkerLogin)">
                             @for (int i = 0; i < ViewBag.Logins.Length; i++)
                             {
                                 <option>@ViewBag.Logins[i]</option>

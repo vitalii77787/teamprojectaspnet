@@ -41,9 +41,9 @@ namespace Teamprojectaspnet.Services
                 Lat = item.Lat,
                 Lng = item.Lng,
                 Contacts = item.Contacts.Select(x =>x.Id+" : "+ x.Name).ToArray(),
-                MarkerAddress = item.Id+" : "+item.Address.City.Name + ", " + item.Address.Street + " " + item.Address.Number,
-                MarkerLogin = item.Id+" : "+item.Login.Name,
-                TypeofMarker = item.Id+" : "+item.Type.Name
+                MarkerAddress = item.Address.Id+" : "+item.Address.City.Name + ", " + item.Address.Street + " " + item.Address.Number,
+                MarkerLogin = item.Login.Id+" : "+item.Login.Name,
+                TypeofMarker = item.Type.Id+" : "+item.Type.Name
             };
             return current;
         }
