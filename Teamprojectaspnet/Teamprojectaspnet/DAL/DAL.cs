@@ -21,17 +21,19 @@ namespace Teamprojectaspnet.DAL
         public void AddNewUserPlace(string name, Address address, MarkerType markerType, string description, double lat, double lng, string picture, Login login,
             string[] contacts)
         {
-            Marker marker = new Marker()
-            {
-                Name = name,
-                Address = address,
-                Type = markerType,
-                Lat = lat,
-                Lng = lng,
-                Login = login,
-                Picture = picture,
-                Description = description
-            };
+
+
+                Marker marker = new Marker()
+                {
+                    Name = name,
+                    Address = address,
+                    Type = markerType,
+                    Lat = lat,
+                    Lng = lng,
+                    Login = login,
+                    Picture = picture,
+                    Description = description
+                };
             ctx.Markers.Add(marker);
             ctx.SaveChanges();
             foreach (var item in contacts)
@@ -40,6 +42,7 @@ namespace Teamprojectaspnet.DAL
             }
             ctx.SaveChanges();
         }
+
 
         public void AddNewMarker(MarkerModel model)
         {

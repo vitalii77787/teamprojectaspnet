@@ -17,7 +17,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control",id = "EDIT1" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.TypeofMarker, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <select class="form-control" name="@Html.NameFor(m => m.TypeofMarker)">
+                        <select id="SelectId" class="form-control" name="@Html.NameFor(m => m.TypeofMarker)">
                             @for (int i = 0; i < ViewBag.Types.Length; i++)
                             {
                                 <option>@ViewBag.Types[i]</option>
@@ -114,6 +114,14 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<hr>
+
+<input type="text" id="TB" class="form-control">
+
+<button id="BTN" class="btn btn-success">Crrrr</button>
+
+
+
 @section Scripts {
     <script type="text/javascript" src = "http://maps.google.com/maps/api/js?key=AIzaSyA0xGLIexwOJlTBM5xhQjP-5jhNxRM662k&sensor=true"></script>
     <script type="text/javascript">
@@ -121,7 +129,36 @@
         var markers = [];
         $(document).ready(function () {
             SetMap();
+
+            $("#BTN").on("click", AAA);
         });
+
+        function AAA()
+        {
+            
+
+            var arr = {};
+
+            
+
+            var inp = document.getElementById("TB");
+
+            inp.value = "Yes"
+
+            var e = document.getElementById("EDIT1");
+
+            arr["Name"] = e.value;
+
+            //e.value = "YYYEEESSS";
+
+           // var t = document.getElementById("SelectId");
+           //
+           // e.value = t.value;
+
+            alert(arr["Name"]);
+
+        }
+
         function SetMap() {
             var Rivne = new google.maps.LatLng(50.6231, 26.2274);
             var mapOptions = {

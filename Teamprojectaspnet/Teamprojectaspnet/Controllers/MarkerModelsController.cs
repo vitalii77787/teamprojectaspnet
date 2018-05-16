@@ -54,13 +54,14 @@ namespace Teamprojectaspnet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,Lat,Lng,TypeofMarker,MarkerAddress,MarkerLogin,Contacts")] MarkerModel markerModel)
+        public ActionResult Create( MarkerModel markerModel)
         {
-            if (ModelState.IsValid)
-            {
-                data.AddNewMarker(markerModel);
-                return RedirectToAction("Index");
-            }
+            
+                if (ModelState.IsValid)
+                {
+                    data.AddNewMarker(markerModel);
+                    return RedirectToAction("Index");
+                }
             return View(markerModel);
         }
 
@@ -82,17 +83,17 @@ namespace Teamprojectaspnet.Controllers
         // POST: MarkerModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,Name,Description,Lat,Lng,TypeofMarker,MarkerAddress,MarkerLogin")] MarkerModel markerModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await data.UpdateMarker(markerModel);
-                return RedirectToAction("Index");
-            }
-            return View(markerModel);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit([Bind(Include = "ID,Name,Description,Lat,Lng,TypeofMarker,MarkerAddress,MarkerLogin")] MarkerModel markerModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        await data.UpdateMarker(markerModel);
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(markerModel);
+        //}
 
         // GET: MarkerModels/Delete/5
         public async Task<ActionResult> Delete(int? id)
