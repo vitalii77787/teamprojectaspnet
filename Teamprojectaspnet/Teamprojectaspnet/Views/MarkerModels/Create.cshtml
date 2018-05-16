@@ -10,41 +10,57 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            <div class="form-horizontal">
+            <div class="form-horizontal table-bordered">
                 <h4>MarkerModel</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control",id = "EDIT1" } })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control",id = "MName" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "MDescr" } })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Contacts, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <select class="form-control" name="@Html.NameFor(m => m.Contacts)">
+                    <div class="col-md-10" id="DivSelectContacts">
+                        <select id="SelectContacts" style="float:left" class="form-control" name="@Html.NameFor(m => m.Contacts)">
                             @for (int i = 0; i < ViewBag.Contacts.Length; i++)
-                            {
-                                <option>@ViewBag.Contacts[i]</option>
-                            }
+            {
+                <option>@ViewBag.Contacts[i]</option>
+}
                         </select>
                         @*@Html.EditorFor(model => model.TypeofMarker, new { htmlAttributes = new { @class = "form-control" } })*@
                         @Html.ValidationMessageFor(model => model.TypeofMarker, "", new { @class = "text-danger" })
+
+
+
+                        <button id="BTNWriteContacts" style="margin-left:1%" class="btn btn-primary">Write</button>
+
                     </div>
+
+                    <div class="col-md-10" style="display:none;float:left" id="DivWriteContacts">
+
+                        @Html.EditorFor(model => model.TypeofMarker, new { htmlAttributes = new { @class = "form-control", @style = "float:left" } })
+
+                        <button id="BTNSelectContacts" style="margin-left:1%" class="btn btn-primary">Select</button>
+
+                    </div>
+
+
+
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Lat, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(x => x.Lat, new {@readonly = true, id = string.Format("Lat"),  @class = "form-control" })
+                        @Html.TextBoxFor(x => x.Lat, new {@readonly = true, id = "MLat",  @class = "form-control" })
                        
                         @*@Html.EditorFor(model => model.Lat, new { htmlAttributes = new { @class = "form-control" } })*@
                         @Html.ValidationMessageFor(model => model.Lat, "", new { @class = "text-danger" })
@@ -53,7 +69,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Lng, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(x => x.Lng, new { @readonly = true, id = string.Format("Lng"), @class = "form-control" })
+                        @Html.TextBoxFor(x => x.Lng, new { @readonly = true, id = "MLng", @class = "form-control" })
                         @*@Html.EditorFor(model => model.Lng, new { htmlAttributes = new { @class = "form-control" } })*@
                         @Html.ValidationMessageFor(model => model.Lng, "", new { @class = "text-danger" })
                     </div>
@@ -61,7 +77,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.TypeofMarker, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <select id="SelectId" class="form-control" name="@Html.NameFor(m => m.TypeofMarker)">
+                        <select id="SelectType" class="form-control" name="@Html.NameFor(m => m.TypeofMarker)">
                             @for (int i = 0; i < ViewBag.Types.Length; i++)
                             {
                                 <option>@ViewBag.Types[i]</option>
@@ -74,7 +90,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MarkerAddress, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <select class="form-control" name="@Html.NameFor(m => m.MarkerAddress)">
+
+                        <select id="SelectAddress" class="form-control" name="@Html.NameFor(m => m.MarkerAddress)">
                             @for (int i = 0; i < ViewBag.Addresses.Length; i++)
                             {
                                 <option>@ViewBag.Addresses[i]</option>
@@ -87,7 +104,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.MarkerLogin, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <select class="form-control" name="@Html.NameFor(m => m.MarkerLogin)">
+                        <select id="SelectLogins" class="form-control" name="@Html.NameFor(m => m.MarkerLogin)">
                             @for (int i = 0; i < ViewBag.Logins.Length; i++)
                             {
                                 <option>@ViewBag.Logins[i]</option>
@@ -99,7 +116,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                        <input id="BTNCreateNewMarker" type="submit" value="Create" class="btn btn-default" />
                     </div>
                 </div>
             </div>
@@ -130,24 +147,62 @@
         $(document).ready(function () {
             SetMap();
 
-            $("#BTN").on("click", AAA);
+           // $("#BTN").on("click", AddMarker);
+
+            $("#BTNCreateNewMarker").on("click", AddMarker);
+
+            $("#BTNWriteContacts").on("click", WriteContact);
+
+            $("#BTNSelectContacts").on("click",SelectContact);
         });
 
-        function AAA()
+        function SelectContact()
         {
+            var x = document.getElementById("DivWriteContacts");
+
+            x.style.display = "none";
+
+            var t = document.getElementById("DivSelectContacts");
+
+            t.style.display = "block";
+        }
+
+        function WriteContact()
+        {
+            var x = document.getElementById("DivWriteContacts");
+
+            x.style.display = "block";
+
+            var t = document.getElementById("DivSelectContacts");
+
+            t.style.display = "none";
+        }
+
+        function AddMarker()
+        {
+            var arrData = {};
+
+            var name = document.getElementById("MName");
+
+            var descr = document.getElementById("MDescr");
+
+            var selCont = document.getElementById("SelectContacts");
+
+            var lat = document.getElementById("MLat");
+
+            var lng = document.getElementById("MLng");
+
+            var selType = document.getElementById("SelectType");
+
+            var selAddress = document.getElementById("SelectAddress");
+
+            var selLogin = document.getElementById("SelectLogins");
+
+            arr["Name"] = name.value;
+
+            arr["Surname"] = descr.value;
+
             
-
-            var arr = {};
-
-            
-
-            var inp = document.getElementById("TB");
-
-            inp.value = "Yes"
-
-            var e = document.getElementById("EDIT1");
-
-            arr["Name"] = e.value;
 
             //e.value = "YYYEEESSS";
 

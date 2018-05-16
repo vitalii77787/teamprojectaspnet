@@ -54,15 +54,11 @@ namespace Teamprojectaspnet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( MarkerModel markerModel)
+        public ActionResult Create(MarkerDTO markerDto)
         {
-            
-                if (ModelState.IsValid)
-                {
-                    data.AddNewMarker(markerModel);
-                    return RedirectToAction("Index");
-                }
-            return View(markerModel);
+            //create
+
+            return View();
         }
 
         // GET: MarkerModels/Edit/5
